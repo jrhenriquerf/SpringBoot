@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Novo livro</title>
+    <meta charset="UTF-8" />
+    <title>Livros</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.min.css" />
 </head>
 <body>
-    <h1>Novo livro</h1>
+<form method="post" action="/livros/gravar">
+    Nome: <input type="text" name="nome" class="form-control">
+    Quantidade Páginas: <input type="text" name="quantidadePaginas" class="form-control">
+    <input type="submit">
+</form>
+
 </body>
 </html>
