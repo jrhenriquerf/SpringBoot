@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping("/books")
 @Controller
-public class LivroController {
+public class BookController {
     @GetMapping("/list")
     public ModelAndView home() {
         return new ModelAndView("books/list");

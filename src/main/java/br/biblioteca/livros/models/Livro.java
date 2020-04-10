@@ -15,7 +15,7 @@ public class Livro {
     @Column(name = "quantidadePaginas")
     private int qtdPages;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "AUTHOR_ID")
     private Autor author;
 
