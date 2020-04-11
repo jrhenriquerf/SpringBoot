@@ -6,17 +6,17 @@ import javax.persistence.*;
 @Table(name = "LIVRO")
 public class Livro {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "NOME", nullable = false)
     private String name;
 
-    @Column(name = "quantidadePaginas")
+    @Column(name = "QUANTIDADEPAGINAS")
     private int qtdPages;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "AUTHOR_ID")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "AUTOR_ID")
     private Autor author;
 
     public long getId() {

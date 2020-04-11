@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:decorate="layout">
 <head>
     <meta charset="UTF-8">
     <title>Listando livros</title>
 </head>
 <body>
-    <h1>Listagem de livros</h1>
+<h1>Listagem de livros 2</h1>
+<table>
+    <a href="#">Novo</a>
+    <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Autor</th>
+        <th>Páginas</th>
+    </tr>
+    <tr th:each="livro : ${livros}">
+        <td th:text="${livro?.id}"></td>
+        <td th:text="${livro?.name}"></td>
+        <td th:text="${livro?.author?.name}"></td>
+        <td th:text="${livro?.qtdPages}"></td>
+        <td><a href="#">Editar</a></td>
+        <td><a href="#">Excluir</a></td>
+    </tr>
+</table>
 </body>
 </html>
