@@ -1,6 +1,9 @@
 package br.biblioteca.livros.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "LIVRO")
@@ -9,9 +12,11 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty
     @Column(name = "NOME", nullable = false)
     private String name;
 
+    @Min(10)
     @Column(name = "QUANTIDADEPAGINAS")
     private int qtdPages;
 

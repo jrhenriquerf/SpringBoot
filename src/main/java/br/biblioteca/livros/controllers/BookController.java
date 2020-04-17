@@ -6,9 +6,11 @@ import br.biblioteca.livros.services.AuthorsService;
 import br.biblioteca.livros.services.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,18 +35,26 @@ public class BookController {
     }
 
     @GetMapping("/novo")
-    public ModelAndView newBook() {
+    public ModelAndView newBook(@ModelAttribute("book") Livro book) {
         ModelAndView modelAndView = new ModelAndView("books/form");
 
         List<Autor> authorsList = authorsService.listAllAuthors();
         modelAndView.addObject("authors", authorsList);
-        modelAndView.addObject("book", new Livro());
 
         return modelAndView;
     }
 
     @PostMapping(value = "/gravar")
-    public ModelAndView save(Livro book) {
+    public ModelAndView save(@Valid Livro book, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("books/form");
+
+            List<Autor> authorsList = authorsService.listAllAuthors();
+            modelAndView.addObject("authors", authorsList);
+            modelAndView.addObject("book", book);
+
+            return modelAndView;
+        }
         booksService.saveBook(book);
         return new ModelAndView("redirect:/books/list");
     }
