@@ -16,4 +16,16 @@ public class BooksService {
     public List<Livro> listAllBooks() {
         return bookRepository.listaLivros();
     }
+
+    public void saveBook(Livro book) {
+        bookRepository.save(book);
+    }
+
+    public Livro searchBook(Long id) {
+        return bookRepository.findById(id).orElseThrow(() -> new RuntimeException());
+    }
+
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
+    }
 }
