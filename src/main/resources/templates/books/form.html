@@ -19,12 +19,12 @@
             <div class="form-group">
                 <label for="inputName">Nome:</label>
                 <input type="text" th:field="*{name}" class="form-control" id="inputName" />
-                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error</span>
             </div>
             <div class="form-group">
                 <label for="inputQtdPages">Quantidade de páginas</label>
                 <input type="text" th:field="*{qtdPages}" id="inputQtdPages" class="form-control" />
-                <span th:if="${#fields.hasErrors('qtdPages')}" th:errors="*{qtdPages}">Error</span>
+                <span th:if="${#fields.hasErrors('qtdPages')}" th:errors="*{qtdPages}" class="text-danger">Error</span>
             </div>
             <div class="form-group">
                 <label for="select-author">Autor</label>
