@@ -47,13 +47,8 @@ public class BookController {
     @PostMapping(value = "/gravar")
     public ModelAndView save(@Valid Livro book, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new     ModelAndView("books/form");
-
-            List<Autor> authorsList = authorsService.listAllAuthors();
-            modelAndView.addObject("authors", authorsList);
-            modelAndView.addObject("book", book);
-
-            return modelAndView;
+            List<Autor> authors = authorsService.listAllAuthors();
+            return new ModelAndView("books/form", "authors", authors);
         }
         booksService.saveBook(book);
         return new ModelAndView("redirect:/books/list");
