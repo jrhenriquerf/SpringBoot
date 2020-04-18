@@ -3,17 +3,16 @@ package br.biblioteca.livros.models;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "LIVRO")
 public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotEmpty
-    @Column(name = "NOME", nullable = false)
+    @Column(name = "NOME")
     private String name;
 
     @Min(10)
@@ -24,11 +23,11 @@ public class Livro {
     @JoinColumn(name = "AUTOR_ID")
     private Autor author;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 

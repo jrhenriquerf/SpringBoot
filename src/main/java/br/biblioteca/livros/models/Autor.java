@@ -8,7 +8,7 @@ import java.util.List;
 public class Autor {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(name = "NOME", nullable = false)
     private String name;
@@ -16,11 +16,11 @@ public class Autor {
     @OneToMany(mappedBy = "author")
     private List<Livro> books = new ArrayList<>();
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
