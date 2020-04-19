@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:decorate="layout">
 <head>
-    <div th:replace="/includes/default :: headerImports"></div>
+    <div th:insert="/includes/default :: headerImports"></div>
 
     <style rel="stylesheet">
         .body-image {
@@ -15,8 +15,8 @@
     </style>
 </head>
 <body class="body-image" th:style="'background: url(' + @{/img/biblioteca.jpeg} + ');'">
-    <div th:replace="/includes/default :: defaultBodyHeader"></div>
-    <div th:replace="/includes/default :: defaultBodyFooter"></div>
-    <div th:replace="/includes/default :: footerImports"></div>
+    <div th:insert="/includes/default :: defaultBodyHeader"></div>
+    <div th:insert="/includes/default :: defaultBodyFooter"></div>
+    <div th:insert="/includes/default :: footerImports"></div>
 </body>
 </html>
