@@ -3,20 +3,17 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:decorate="layout">
-<head>
-    <div th:insert="/includes/default :: headerImports"></div>
-
-    <style rel="stylesheet">
-        .body-image {
-            background-repeat: no-repeat !important;
-            background-attachment: fixed !important;
-            background-position: 50% 40% !important;
-        }
-    </style>
-</head>
+<head th:replace="/includes/default :: headerImports"></head>
+<style rel="stylesheet">
+    .body-image {
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
+        background-position: 50% 40% !important;
+    }
+</style>
 <body class="body-image" th:style="'background: url(' + @{/img/biblioteca.jpeg} + ');'">
-    <div th:insert="/includes/default :: defaultBodyHeader"></div>
-    <div th:insert="/includes/default :: defaultBodyFooter"></div>
-    <div th:insert="/includes/default :: footerImports"></div>
+    <div th:replace="/includes/default :: defaultBodyHeader"></div>
+    <div th:replace="/includes/default :: defaultBodyFooter"></div>
+    <div th:replace="/includes/default :: footerImports"></div>
 </body>
 </html>

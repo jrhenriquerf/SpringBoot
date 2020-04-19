@@ -3,11 +3,9 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:decorate="layout">
-<head>
-    <div th:insert="/includes/default :: headerImports"></div>
-</head>
+<head th:replace="/includes/default :: headerImports"></head>
 <body>
-    <div th:insert="/includes/default :: defaultBodyHeader"></div>
+    <div th:replace="/includes/default :: defaultBodyHeader"></div>
 
     <div class="container" style="margin-top: 50px;">
         <h1>Formulário de cadastro de livros da biblioteca</h1>
@@ -40,7 +38,7 @@
 
     </div>
 
-    <div th:insert="/includes/default :: defaultBodyFooter"></div>
-    <div th:insert="/includes/default :: footerImports"></div>
+    <div th:replace="/includes/default :: defaultBodyFooter"></div>
+    <div th:replace="/includes/default :: footerImports"></div>
 </body>
 </html>
