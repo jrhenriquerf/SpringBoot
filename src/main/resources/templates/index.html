@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:decorate="layout">
+<head>
+    <div th:replace="/includes/default :: headerImports"></div>
+
+    <style rel="stylesheet">
+        .body-image {
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+            background-position: 50% 40% !important;
+        }
+    </style>
+</head>
+<body class="body-image" th:style="'background: url(' + @{/img/biblioteca.jpeg} + ');'">
+    <div th:replace="/includes/default :: defaultBodyHeader"></div>
+    <div th:replace="/includes/default :: defaultBodyFooter"></div>
+    <div th:replace="/includes/default :: footerImports"></div>
+</body>
+</html>
