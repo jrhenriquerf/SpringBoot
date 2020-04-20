@@ -21,10 +21,10 @@
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <!--li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li-->
-                    <li th:classappend="${#request.getServletPath() == '/books/list' || #request.getServletPath() == '/books/novo' ? 'active' : ''}">
+                    <li th:classappend="${#request.getServletPath() == '/books/list' || #request.getServletPath() == '/books/novo' || #request.getServletPath() == '/books/gravar' ? 'active' : ''}">
                         <a th:href="@{/books/list}">Livros</a>
                     </li>
-                    <li th:classappend="${#request.getServletPath() == '/authors/list' || #request.getServletPath() == '/authors/novo' ? 'active' : ''}">
+                    <li th:classappend="${#request.getServletPath() == '/authors/list' || #request.getServletPath() == '/authors/novo' || #request.getServletPath() == '/authors/gravar' ? 'active' : ''}">
                         <a th:href="@{/authors/list}">Autores</a>
                     </li>
                     <li th:classappend="${#request.getServletPath() == '/books/pendings' ? 'active' : ''}">
