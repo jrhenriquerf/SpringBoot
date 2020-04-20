@@ -12,6 +12,7 @@
             <div class="form-group">
                 <label for="inputName">Nome:</label>
                 <input type="text" th:field="*{name}" class="form-control" id="inputName" />
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error</span>
             </div>
 
             <input type="submit" class="btn btn-primary" value="Gravar" />

@@ -1,15 +1,17 @@
 package br.biblioteca.livros.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Autor {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     @Column(name = "NOME", nullable = false)
     private String name;
 

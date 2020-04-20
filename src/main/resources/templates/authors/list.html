@@ -26,9 +26,28 @@
                             </a>
                         </td>
                         <td class="text-center">
-                            <a th:href="@{'/authors/excluir/' + ${author?.id}}" class="text-danger">
+                            <a data-toggle="modal" th:data-target="'#modalConfirm' + ${author?.id}" class="text-danger">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
+
+                            <!-- Modal -->
+                            <div class="modal fade" th:id="'modalConfirm' + ${author?.id}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Janela de confirmação</h4>
+                                        </div>
+                                        <div class="modal-body text-left">
+                                            <p>Tem certeza que deseja excluir este autor?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a th:href="@{'/authors/excluir/' + ${author?.id}}" class="btn btn-danger">Excluir</a>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </table>
