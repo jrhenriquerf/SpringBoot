@@ -27,6 +27,8 @@ public class BookConverter {
 
         dto.setTitle(book.getName());
         dto.setPages(book.getQtdPages());
+        dto.setAuthorId(null);
+        dto.setAuthor(null);
 
         if (book.getAuthor() != null) {
             dto.setAuthorId(book.getAuthor().getId());
@@ -41,7 +43,13 @@ public class BookConverter {
     }
 
     public static Livro toModel(BooksDTO book) {
-        Autor author = authorsServiceStatic.searchAuthor(book.getAuthorId());
+        Autor author;
+
+        try {
+            author = authorsServiceStatic.searchAuthor(book.getAuthorId());
+        } catch (Exception err) {
+            author = null;
+        }
 
         Livro bookConverted = new Livro();
         bookConverted.setName(book.getTitle());
