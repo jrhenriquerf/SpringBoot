@@ -3,10 +3,12 @@ package br.biblioteca.livros.models;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "LIVRO")
-public class Livro {
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +23,10 @@ public class Livro {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "AUTOR_ID")
-    private Autor author;
+    private Author author;
+
+    @OneToMany(mappedBy = "book")
+    private List<Evaluation> evaluations = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -43,15 +48,23 @@ public class Livro {
         return qtdPages;
     }
 
+    public List<Evaluation> getEvaluations() {
+        return evaluations;
+    }
+
     public void setQtdPages(int qtdPages) {
         this.qtdPages = qtdPages;
     }
 
-    public Autor getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(Autor author) {
+    public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public void setEvaluations(List<Evaluation> evaluations) {
+        this.evaluations = evaluations;
     }
 }

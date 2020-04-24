@@ -2,8 +2,8 @@ package br.biblioteca.livros.api;
 
 import br.biblioteca.livros.converter.BookConverter;
 import br.biblioteca.livros.dto.BooksDTO;
-import br.biblioteca.livros.models.Livro;
-import br.biblioteca.livros.services.BooksService;
+import br.biblioteca.livros.facade.BookFacade;
+import br.biblioteca.livros.models.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +15,18 @@ import java.util.List;
 public class BookApiController {
 
     @Autowired
-    BooksService booksService;
+    BookFacade bookFacade;
 
     @GetMapping("/book")
     public ResponseEntity<List<BooksDTO>> books() {
-        List<Livro> booksList = booksService.listAllBooks();
+        List<Book> booksList = bookFacade.listAllBooks();
 
         return ResponseEntity.ok(BookConverter.toDTO(booksList));
     }
 
     @PostMapping(value = "/book")
     public ResponseEntity<Integer> store(@RequestBody BooksDTO book) {
-        Livro bookConverted = BookConverter.toModel(book);
-
-        booksService.saveBook(bookConverted);
+        bookFacade.saveBook(book);
 
         return ResponseEntity.ok(1);
     }
@@ -36,7 +34,7 @@ public class BookApiController {
     @GetMapping("/book/{id}")
     public ResponseEntity<BooksDTO> find(@PathVariable("id") Long bookId) {
         try {
-            Livro book = booksService.searchBook(bookId);
+            Book book = bookFacade.searchBook(bookId);
 
             return ResponseEntity.ok(BookConverter.toDTO(book));
         } catch (Exception err) {
@@ -47,13 +45,7 @@ public class BookApiController {
     @PutMapping("/book/{id}")
     public ResponseEntity<Integer> update(@PathVariable("id") Long bookId, @RequestBody BooksDTO booksDTO) {
         try {
-            Livro book = booksService.searchBook(bookId);
-
-            Livro bookConverted = BookConverter.toModel(booksDTO);
-
-            bookConverted.setId(book.getId());
-
-            booksService.saveBook(bookConverted);
+            bookFacade.update(bookId, booksDTO);
 
             return ResponseEntity.ok(1);
         } catch (Exception err) {
@@ -64,7 +56,7 @@ public class BookApiController {
     @DeleteMapping("/book/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long bookId) {
         try {
-            booksService.deleteBook(bookId);
+            bookFacade.deleteBook(bookId);
 
             return ResponseEntity.ok().build();
         } catch (Exception err) {

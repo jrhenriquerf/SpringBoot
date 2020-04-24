@@ -1,8 +1,8 @@
 package br.biblioteca.livros.repositories;
 
-import br.biblioteca.livros.models.Autor;
+import br.biblioteca.livros.models.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AuthorRepository extends JpaRepository<Autor, Long> {
+public interface AuthorRepository extends JpaRepository<Author, Long> {
 
 }

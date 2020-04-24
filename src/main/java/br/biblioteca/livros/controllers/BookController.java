@@ -1,7 +1,7 @@
 package br.biblioteca.livros.controllers;
 
-import br.biblioteca.livros.models.Autor;
-import br.biblioteca.livros.models.Livro;
+import br.biblioteca.livros.models.Author;
+import br.biblioteca.livros.models.Book;
 import br.biblioteca.livros.services.AuthorsService;
 import br.biblioteca.livros.services.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -28,26 +27,26 @@ public class BookController {
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("books/list");
 
-        List<Livro> booksList = booksService.listAllBooks();
+        List<Book> booksList = booksService.listAllBooks();
         modelAndView.addObject("books", booksList);
 
         return  modelAndView;
     }
 
     @GetMapping("/novo")
-    public ModelAndView newBook(@ModelAttribute("book") Livro book) {
+    public ModelAndView newBook(@ModelAttribute("book") Book book) {
         ModelAndView modelAndView = new ModelAndView("books/form");
 
-        List<Autor> authorsList = authorsService.listAllAuthors();
+        List<Author> authorsList = authorsService.listAllAuthors();
         modelAndView.addObject("authors", authorsList);
 
         return modelAndView;
     }
 
     @PostMapping(value = "/gravar")
-    public ModelAndView save(@Valid @ModelAttribute("book") Livro book, BindingResult bindingResult) {
+    public ModelAndView save(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            List<Autor> authors = authorsService.listAllAuthors();
+            List<Author> authors = authorsService.listAllAuthors();
             return new ModelAndView("books/form", "authors", authors);
         }
         booksService.saveBook(book);
@@ -56,8 +55,8 @@ public class BookController {
 
     @GetMapping("/alterar/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
-        Livro book = booksService.searchBook(id);
-        List<Autor> authorsList = authorsService.listAllAuthors();
+        Book book = booksService.searchBook(id);
+        List<Author> authorsList = authorsService.listAllAuthors();
 
         ModelAndView modelAndView = new ModelAndView("books/form");
         modelAndView.addObject("authors", authorsList);

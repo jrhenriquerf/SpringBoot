@@ -1,7 +1,6 @@
 package br.biblioteca.livros.services;
 
-import br.biblioteca.livros.models.Autor;
-import br.biblioteca.livros.models.Livro;
+import br.biblioteca.livros.models.Author;
 import br.biblioteca.livros.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,15 +12,15 @@ public class AuthorsService {
     @Autowired
     AuthorRepository authorRepository;
 
-    public List<Autor> listAllAuthors() {
+    public List<Author> listAllAuthors() {
         return authorRepository.findAll();
     }
 
-    public void saveAuthor(Autor author) {
+    public void saveAuthor(Author author) {
         authorRepository.save(author);
     }
 
-    public Autor searchAuthor(Long id) {
+    public Author searchAuthor(Long id) {
         return authorRepository.findById(id).orElseThrow(() -> new RuntimeException());
     }
 

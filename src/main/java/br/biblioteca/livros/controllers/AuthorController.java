@@ -1,7 +1,6 @@
 package br.biblioteca.livros.controllers;
 
-import br.biblioteca.livros.models.Autor;
-import br.biblioteca.livros.models.Livro;
+import br.biblioteca.livros.models.Author;
 import br.biblioteca.livros.services.AuthorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,21 +21,21 @@ public class AuthorController {
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("authors/list");
 
-        List<Autor> authorsList = authorsService.listAllAuthors();
+        List<Author> authorsList = authorsService.listAllAuthors();
         modelAndView.addObject("authors", authorsList);
 
         return  modelAndView;
     }
 
     @GetMapping("/novo")
-    public ModelAndView newAuthor(@ModelAttribute("author") Autor author) {
+    public ModelAndView newAuthor(@ModelAttribute("author") Author author) {
         ModelAndView modelAndView = new ModelAndView("authors/form");
 
         return modelAndView;
     }
 
     @PostMapping("/gravar")
-    public ModelAndView save(@Valid @ModelAttribute("author") Autor author, BindingResult bindingResult) {
+    public ModelAndView save(@Valid @ModelAttribute("author") Author author, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("authors/form");
         }
@@ -46,7 +45,7 @@ public class AuthorController {
 
     @GetMapping("/alterar/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
-        Autor author = authorsService.searchAuthor(id);
+        Author author = authorsService.searchAuthor(id);
 
         ModelAndView modelAndView = new ModelAndView("authors/form");
         modelAndView.addObject("author", author);
