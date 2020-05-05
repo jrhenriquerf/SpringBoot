@@ -1,20 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout}"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 	<title>Usuários</title>
 </head>
 <body>
-	<h1>Lista de usuários</h1>
-	<h2>Acesso Liberado <span sec:authentication="name"></span></h2>
-	<div>
-		<ul>
-			<li sec:authorize="isAnonymous()"><a th:href="@{/user/login}" href="#"> Login </a></li>
-			<li sec:authorize="hasAuthority('ROLE_VISITANTE')"><a th:href="@{/user/list}" href="#"> Lista Basica </a></li>
-			<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/user/listadmin}" href="#"> Lista Admin </a></li>
-			<li><a th:href="@{/user/logout}" href="#"> Logout </a></li>
-		</ul>
+	<div layout:fragment="content" class="container" style="margin-top: 50px;">
+		<h1>Listagem de usuários</h1>
+		<hr />
+		<div class="table-responsive">
+			<a th:href="@{/user/registration}" class="btn btn-success">Novo usuário</a>
+			<div style="margin-top: 20px;">
+				<table class="table table-hover">
+					<tr>
+						<th>Id</th>
+						<th>Usuário</th>
+						<th colspan="2" class="text-center">Ações</th>
+					</tr>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.id}">Username</td>
+						<td th:text="${user.username}">Username</td>
+						<td class="text-center">
+							<a th:href="@{'/user/alterar/' + ${user?.id}}" class="text-primary">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+						</td>
+						<td class="text-center">
+							<a data-toggle="modal" th:data-target="'#modalConfirm' + ${user?.id}" class="text-danger">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+
+							<!-- Modal -->
+							<div class="modal fade" th:id="'modalConfirm' + ${user?.id}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title" id="myModalLabel">Janela de confirmação</h4>
+										</div>
+										<div class="modal-body text-left">
+											<p>Tem certeza que deseja excluir este usuário?</p>
+										</div>
+										<div class="modal-footer">
+											<a th:href="@{'/user/excluir/' + ${user?.id}}" class="btn btn-danger">Excluir</a>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

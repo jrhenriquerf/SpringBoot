@@ -8,7 +8,6 @@ import br.biblioteca.livros.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -42,8 +42,8 @@ public class UserControllers {
 	}
 
 	@PostMapping("/autentication")
-	public ModelAndView autentication(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-		
+	public ModelAndView autentication(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+
 		loginValidator.validate(userForm, bindingResult);
 
 		if (bindingResult.hasErrors()) {
@@ -55,15 +55,10 @@ public class UserControllers {
 	}
 
 	@GetMapping("/list")
-	public ModelAndView list() {
-		return new ModelAndView("user/list");
-	}
-	
-	@GetMapping("/listadmin")
-	public ModelAndView listadmin(User user) {
-
+	public ModelAndView list(User user) {
 		List<User> users = userService.findAll();
-		return new ModelAndView("user/listadmin","users",users);
+
+		return new ModelAndView("user/list", "users", users);
 	}
 
 	@GetMapping(value = "/registration")
@@ -73,7 +68,7 @@ public class UserControllers {
 	}
 
 	@PostMapping(value = "/registration")
-	public ModelAndView registrationform(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+	public ModelAndView registrationform(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
 
 		userValidator.validate(userForm, bindingResult);
 
@@ -85,9 +80,13 @@ public class UserControllers {
 
 		userService.save(userForm);
 
+		if (hasRole("ROLE_ADMIN")) {
+			return new ModelAndView("redirect:/user/list");
+		}
+
 		try {
 			securityService.login(userForm.getUsername(), password);
-			return new ModelAndView("redirect:/user/list");
+			return new ModelAndView("redirect:/books/list");
 			
 		} catch (Exception e) {
 			
@@ -103,6 +102,15 @@ public class UserControllers {
 			session.invalidate();
 		}
 		return "redirect:/user/login";
+	}
+
+	private boolean hasRole(String roleName)
+	{
+		System.out.println(SecurityContextHolder.getContext());
+		System.out.println(SecurityContextHolder.getContext().getAuthentication());
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+		return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(roleName));
 	}
 
 }
