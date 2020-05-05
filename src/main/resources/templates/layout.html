@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Layout</title>
@@ -27,8 +28,8 @@
                     <li th:classappend="${#request.getServletPath() == '/authors/list' || #request.getServletPath() == '/authors/novo' || #request.getServletPath() == '/authors/gravar' ? 'active' : ''}">
                         <a th:href="@{/authors/list}">Autores</a>
                     </li>
-                    <li th:classappend="${#request.getServletPath() == '/books/pendings' ? 'active' : ''}">
-                        <a href="#">Pendências</a>
+                    <li th:classappend="${#request.getServletPath() == '/user/list' ? 'active' : ''}">
+                        <a th:href="@{/user/list}">Usuários</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
