@@ -1,5 +1,6 @@
 package br.biblioteca.livros.services;
 
+import br.biblioteca.livros.models.Author;
 import br.biblioteca.livros.models.User;
 import br.biblioteca.livros.repositories.RoleRepository;
 import br.biblioteca.livros.repositories.UserRepository;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(
                 user.getPassword()));
 
-        user.getRoles().add(roleRepository.findByRole("ROLE_VISITANTE"));
+        user.getRoles().add(roleRepository.findByRole("ROLE_VISUALIZAR"));
         userRepository.save(user);
     }
 
@@ -37,5 +38,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException());
+    }
+
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 }

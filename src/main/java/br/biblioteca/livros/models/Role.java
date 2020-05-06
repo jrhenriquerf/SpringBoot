@@ -16,6 +16,10 @@ public class Role {
 	@Column(name = "PERMISSAO")
 	String role;
 
+	@NotEmpty
+	@Column(name = "DESCRICAO")
+	String roleDescription;
+
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users = new HashSet<>();
 
@@ -31,6 +35,10 @@ public class Role {
 		return role;
 	}
 
+	public String getRoleDescription() {
+		return roleDescription;
+	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
@@ -41,6 +49,10 @@ public class Role {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+
+	public void setRoleDescription(String roleDescription) {
+		this.roleDescription = roleDescription;
 	}
 
 	@Override

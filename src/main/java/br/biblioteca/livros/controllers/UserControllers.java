@@ -1,6 +1,9 @@
 package br.biblioteca.livros.controllers;
 
+import br.biblioteca.livros.models.Author;
+import br.biblioteca.livros.models.Role;
 import br.biblioteca.livros.models.User;
+import br.biblioteca.livros.services.RoleService;
 import br.biblioteca.livros.services.SecurityService;
 import br.biblioteca.livros.services.UserService;
 import br.biblioteca.livros.validator.LoginValidator;
@@ -9,15 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -36,6 +37,9 @@ public class UserControllers {
 	@Autowired
 	private LoginValidator loginValidator;
 
+	@Autowired
+	private RoleService roleService;
+
 	@GetMapping("/login")
 	public ModelAndView login() {
 		return new ModelAndView("user/form", "userForm", new User());
@@ -51,7 +55,7 @@ public class UserControllers {
 		}
 
 		securityService.login(userForm.getUsername(), userForm.getPassword());
-		return new ModelAndView("redirect:/user/list");
+		return new ModelAndView("redirect:/books/list");
 	}
 
 	@GetMapping("/list")
@@ -63,8 +67,16 @@ public class UserControllers {
 
 	@GetMapping(value = "/registration")
 	public ModelAndView registration() {
-		
-		return new ModelAndView("user/registration", "userForm", new User());
+		ModelAndView modelAndView = new ModelAndView("user/registration");
+		modelAndView.addObject("userForm", new User());
+
+		if (hasRole("ROLE_GERENCIA_USUARIOS")) {
+			List<Role> roles = roleService.findAll();
+
+			modelAndView.addObject("roles", roles);
+		}
+
+		return  modelAndView;
 	}
 
 	@PostMapping(value = "/registration")
@@ -73,14 +85,21 @@ public class UserControllers {
 		userValidator.validate(userForm, bindingResult);
 
 		if (bindingResult.hasErrors()) {
-			return new ModelAndView("user/registration");
+			ModelAndView modelAndView = new ModelAndView("user/registration");
+
+			if (hasRole("ROLE_GERENCIA_USUARIOS")) {
+				List<Role> roles = roleService.findAll();
+				modelAndView.addObject("roles", roles);
+			}
+
+			return modelAndView;
 		}
 		
 		String password = userForm.getPassword();
 
 		userService.save(userForm);
 
-		if (hasRole("ROLE_ADMIN")) {
+		if (hasRole("ROLE_GERENCIA_USUARIOS")) {
 			return new ModelAndView("redirect:/user/list");
 		}
 
@@ -92,6 +111,24 @@ public class UserControllers {
 			
 			return new ModelAndView("redirect:/user/login");
 		}
+	}
+
+	@GetMapping("/alterar/{id}")
+	public ModelAndView edit(@PathVariable("id") Long id) {
+		User user = userService.findById(id);
+		List<Role> roles = roleService.findAll();
+
+		ModelAndView modelAndView = new ModelAndView("user/registration");
+		modelAndView.addObject("userForm", user);
+		modelAndView.addObject("roles", roles);
+
+		return modelAndView;
+	}
+
+	@GetMapping("/excluir/{id}")
+	public ModelAndView delete(@PathVariable("id") Long id) {
+		userService.deleteById(id);
+		return new ModelAndView("redirect:/user/list");
 	}
 
 	@GetMapping("/logout")
