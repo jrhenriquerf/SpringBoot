@@ -143,9 +143,6 @@ public class UserControllers {
 
 	private boolean hasRole(String roleName)
 	{
-		System.out.println(SecurityContextHolder.getContext());
-		System.out.println(SecurityContextHolder.getContext().getAuthentication());
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
 				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(roleName));
 	}
