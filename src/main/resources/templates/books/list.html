@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{layout}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Listando livros</title>
 </head>
@@ -9,32 +10,29 @@
         <h1>Listagem de livros</h1>
         <hr />
         <div class="table-responsive">
-            <a th:href="@{/books/novo}" class="btn btn-success">Novo livro</a>
+            <a sec:authorize="hasAuthority('ROLE_ATUALIZAR_DADOS')" th:href="@{/books/novo}" class="btn btn-success">Novo livro</a>
             <div style="margin-top: 20px;">
                 <table class="table table-hover">
                     <tr>
-                        <th>Id</th>
                         <th>Nome</th>
                         <th>Autor</th>
                         <th>Páginas</th>
-                        <th colspan="2" class="text-center">Ações</th>
+                        <th sec:authorize="hasAuthority('ROLE_ATUALIZAR_DADOS')" colspan="2" class="text-center">Ações</th>
                     </tr>
                     <tr th:each="book : ${books}">
-                        <td th:text="${book?.id}"></td>
                         <td th:text="${book?.name}"></td>
                         <td th:text="${book?.author?.name}"></td>
                         <td th:text="${book?.qtdPages}"></td>
-                        <td class="text-center">
+                        <td sec:authorize="hasAuthority('ROLE_ATUALIZAR_DADOS')" class="text-center">
                             <a th:href="@{'/books/alterar/' + ${book?.id}}" class="text-primary">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </a>
                         </td>
-                        <td class="text-center">
+                        <td sec:authorize="hasAuthority('ROLE_ATUALIZAR_DADOS')" class="text-center">
                             <a data-toggle="modal" th:data-target="'#modalConfirm' + ${book?.id}" class="text-danger">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
 
-                            <!-- Modal -->
                             <div class="modal fade" th:id="'modalConfirm' + ${book?.id}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
