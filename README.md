@@ -64,6 +64,15 @@ Atualiza os dados do livro passado pelo parâmetro de rota (`{id}`) recendo as i
 ### DELETE - `/api/book/{id}`
 Deleta o livro do id passado via paramêtro de rota (`{id}`)
 
+### POST - `/api/book/evaluation/{id}`
+Cria um novo comentário sobre o livro, deve passar os dados via **body** seguindo a seguinte estrutura:
+```json
+{
+	"comment": "Comentário",
+	"note": 1
+}
+```
+
 ## Regras de acesso desenvolvidas
 Para o gerenciamento de tipo e acesso dos usuários, foram criadas três regras:
 - **ROLE_VISUALIZAR**: Permite que o usuário visualize os livros e autores. 
