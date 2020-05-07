@@ -61,10 +61,10 @@ Atualiza os dados do livro passado pelo parâmetro de rota (`{id}`) recendo as i
 }
 ```
  
- ### DELETE - `/api/book/{id}`
+### DELETE - `/api/book/{id}`
 Deleta o livro do id passado via paramêtro de rota (`{id}`)
 
-### Regras de acesso desenvolvidas
+## Regras de acesso desenvolvidas
 Para o gerenciamento de tipo e acesso dos usuários, foram criadas três regras:
 - **ROLE_VISUALIZAR**: Permite que o usuário visualize os livros e autores. 
 - **ROLE_GERENCIA_USUARIOS**: Permite que o usuário gerencie os usuários do sistema, podendo listar, alterar, criar e excluir.
