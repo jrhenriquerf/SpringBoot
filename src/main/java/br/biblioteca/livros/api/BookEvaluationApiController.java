@@ -1,16 +1,14 @@
 package br.biblioteca.livros.api;
 
-import br.biblioteca.livros.converter.EvaluationConverter;
 import br.biblioteca.livros.dto.EvaluationDTO;
+import br.biblioteca.livros.exception.BookNotFoundException;
 import br.biblioteca.livros.facade.ApiFacade;
-import br.biblioteca.livros.services.BooksService;
-import br.biblioteca.livros.services.EvaluationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class BookEvaluationApiController {
 
     @Autowired
@@ -20,7 +18,7 @@ public class BookEvaluationApiController {
     public ResponseEntity<Long> createComment(@PathVariable("id") Long id, @RequestBody EvaluationDTO evaluationDTO) {
         try {
             return ResponseEntity.ok(apiFacade.saveEvaluation(id, evaluationDTO));
-        } catch (Exception err) {
+        } catch (BookNotFoundException err) {
             return ResponseEntity.notFound().build();
         }
     }
